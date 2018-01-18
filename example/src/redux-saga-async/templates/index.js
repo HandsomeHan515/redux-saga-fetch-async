@@ -57,7 +57,7 @@ export const register = config => {
 }
 
 
-export const reduxSOP = () => {
+const reduxSOP = () => {
   configList.map(item => {
     const tmpSchema = new schema.Entity(item.id);
 
@@ -113,4 +113,4 @@ sagaMiddleware.run(appSaga)
 
 const combineData = (result, entities) => (result.map(item => entities[item]));
 
-export { combineData, Provider, store }
+export { combineData, Provider, store, reduxSOP }

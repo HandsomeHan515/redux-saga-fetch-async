@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { handsome, combineData } from './templates';
+import { handsome, combineData } from './redux-saga-async';
 
 class User extends Component {
   componentWillMount() {
