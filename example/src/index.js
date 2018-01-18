@@ -3,9 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
+import User from './User';
 import { store, Provider } from './redux-saga-async';
 
-import User from './User';
+// const serviceDomain = 'https://api.github.com';
+
+// const address = {
+//   users: `${serviceDomain}/users`,
+// }
+
 
 ReactDOM.render(
   <Provider store={store}>

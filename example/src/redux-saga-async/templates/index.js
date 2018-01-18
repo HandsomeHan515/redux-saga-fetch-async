@@ -9,7 +9,7 @@ import { actions, actionMethods } from "./action";
 import { getReducers } from './reducer';
 import { watchingSagas, appSaga } from "./saga";
 import { appState } from './store';
-import { configList } from '../service';
+import { address } from '../service';
 
 export const handsome = {}
 
@@ -56,6 +56,9 @@ export const register = config => {
   handsome[cfg.id] = act
 }
 
+export const configList = [
+  { id: 'users', addr: address.users, hasCert: false },
+]
 
 const reduxSOP = () => {
   configList.map(item => {
