@@ -3,6 +3,16 @@ Use redux, redux-saga, normalizr, lodash and fetch api to apply service data wit
 
 ## Usage
 
+### 安装依赖包
+
+```
+"lodash": "^4.17.4",
+"react-redux": "^5.0.6",
+"redux": "^3.7.2",
+"redux-saga": "^0.16.0",
+"normalizr": "^3.2.4",
+```
+
 ### redux-saga-async配置
 1. add api address in /service/addresss.js
 
@@ -47,7 +57,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { handsome, combineData } from '../templates';
+import { handsome, combineData } from './templates';
 
 class User extends Component {
   componentWillMount() {
@@ -58,15 +68,23 @@ class User extends Component {
     const { usersResults, usersEntities, usersStatus } = this.props
     const users = combineData(usersResults, usersEntities);
 
+    console.log('users: %o', users)
+
     return (
-      <div>
+      <div style={{ textAlign: 'center' }}>
         {
           usersStatus.isFetching ?
             null
             :
             <div>
               {
-                users.map((item, index) => <img key={item.id} style={{ height: document.body.clientHeight, width: '100%' }} src={item.avatar_url} alt={item.login} />)
+                users.map((item, index) =>
+                  <img
+                    key={item.id}
+                    style={{ height: 200, width: 300, display: 'inline-block', margin: 10 }}
+                    src={item.avatar_url}
+                    alt={item.login}
+                  />)
               }
             </div>
         }
@@ -95,3 +113,49 @@ export default connect(
 )(User)
 ```
 
+### index.js配置
+
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import registerServiceWorker from './registerServiceWorker';
+
+import { createStore, compose, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+
+import { appSaga, appState, appReducer } from './templates';
+
+import User from './User';
+
+let sagaMiddleware = createSagaMiddleware()
+let enhancer = {}
+
+if (process.env.NODE_ENV === 'production') {
+  enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+  )
+} else {
+  enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+}
+
+export const store = createStore(
+  appReducer,
+  appState,
+  enhancer,
+)
+
+sagaMiddleware.run(appSaga)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <User />
+  </Provider>
+  , document.getElementById('root'));
+registerServiceWorker();
+
+```
