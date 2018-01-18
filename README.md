@@ -2,6 +2,8 @@
 Use redux, redux-saga, normalizr, lodash and fetch api to apply service data with restful api.
 
 ## Usage
+1. 将service和templates文件置于项目src目录下
+2. 下载example文件至本电脑，执行npm install -> npm start查看效果 
 
 ### 安装依赖包
 
