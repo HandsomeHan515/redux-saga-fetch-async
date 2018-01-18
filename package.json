@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-     "lodash": "^4.17.4",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
-    "redux-saga": "^0.16.0",
-    "normalizr": "^3.2.4",
-  }
-}
