@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 import { schema } from 'normalizr';
 
+import { createStore, compose, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+
 import { actions, actionMethods } from "./action";
 import { getReducers } from './reducer';
 import { watchingSagas, appSaga } from "./saga";
@@ -85,6 +89,28 @@ const appReducer = combineReducers({
   status,
 })
 
+let sagaMiddleware = createSagaMiddleware()
+let enhancer = {}
+
+if (process.env.NODE_ENV === 'production') {
+  enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+  )
+} else {
+  enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+}
+
+const store = createStore(
+  appReducer,
+  appState,
+  enhancer,
+)
+
+sagaMiddleware.run(appSaga)
+
 const combineData = (result, entities) => (result.map(item => entities[item]));
 
-export { appState, appSaga, appReducer, combineData }
+export { combineData, Provider, store }
