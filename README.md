@@ -114,6 +114,7 @@ export default connect(
 ```
 
 ### index.js配置
++ 安装Google浏览器插件[https://github.com/zalmoxisus/redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
 
 ```
 import React from 'react';
