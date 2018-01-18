@@ -13,8 +13,6 @@ class User extends Component {
     const { usersResults, usersEntities, usersStatus } = this.props
     const users = combineData(usersResults, usersEntities);
 
-    console.log('users: %o', users)
-
     return (
       <div style={{ textAlign: 'center' }}>
         {

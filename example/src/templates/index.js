@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
+import { schema } from 'normalizr';
 
 import { actions, actionMethods } from "./action";
 import { getReducers } from './reducer';
 import { watchingSagas, appSaga } from "./saga";
-import { configList } from './config';
 import { appState } from './store';
+import { configList } from '../service';
 
 export const handsome = {}
 
@@ -54,6 +55,11 @@ export const register = config => {
 
 export const reduxSOP = () => {
   configList.map(item => {
+    const tmpSchema = new schema.Entity(item.id);
+
+    item.schemaID = item.id
+    item.schema = { results: [tmpSchema] }
+
     register(item)
     return false
   })

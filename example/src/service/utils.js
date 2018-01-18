@@ -31,7 +31,7 @@ export const request = config => {
   return (
     fetch(config.url, elements)
       .then((response) => {
-        console.log('response: %o', response)
+        // console.log('response: %o', response)
         if (!response.ok) {
           let error = new Error(response.statusText || 'Something bas happen')
           error.response = response
