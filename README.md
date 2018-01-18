@@ -3,6 +3,16 @@ Use redux, redux-saga, normalizr, lodash and fetch api to apply service data wit
 
 ## Usage
 
+### 安装依赖包
+
+```
+"lodash": "^4.17.4",
+"react-redux": "^5.0.6",
+"redux": "^3.7.2",
+"redux-saga": "^0.16.0",
+"normalizr": "^3.2.4",
+```
+
 ### redux-saga-async配置
 1. add api address in /service/addresss.js
 
