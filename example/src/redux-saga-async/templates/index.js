@@ -1,14 +1,9 @@
-import { combineReducers } from 'redux';
-import { schema } from 'normalizr';
-
-
 import { actions, actionMethods } from "./action";
 import { getReducers } from './reducer';
 import { watchingSagas, appSaga } from "./saga";
 import { appState } from './store';
-import { configList } from '../service';
 
-export const handsome = {}
+const handsome = {}
 
 /**
  * @param config ={
@@ -53,37 +48,4 @@ const register = config => {
   handsome[cfg.id] = act
 }
 
-const reduxSOP = () => {
-  configList.map(item => {
-    const tmpSchema = new schema.Entity(item.id);
-
-    item.schemaID = item.id
-    item.schema = { results: [tmpSchema] }
-
-    register(item)
-    return false
-  })
-}
-
-reduxSOP()
-
-const results = combineReducers(
-  getReducers('results')
-)
-
-const entities = combineReducers(
-  getReducers('entities')
-)
-
-const status = combineReducers(
-  getReducers('status')
-)
-
-const appReducer = combineReducers({
-  results,
-  entities,
-  status,
-})
-
-
-export { appReducer, appSaga, appState, reduxSOP }
+export { appSaga, appState, getReducers, register, handsome }
