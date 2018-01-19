@@ -2,17 +2,12 @@
 Use redux, redux-saga, normalizr, lodash and fetch api to apply service data with restful api.
 
 ## Usage
-1. 将service和templates文件置于项目src目录下
-2. 下载example文件至本电脑，执行npm install -> npm start查看效果 
-
-### 安装依赖包
 
 ```
-"lodash": "^4.17.4",
-"react-redux": "^5.0.6",
-"redux": "^3.7.2",
-"redux-saga": "^0.16.0",
-"normalizr": "^3.2.4",
+npm install redux-saga-fetch-async --save
+
+or yarn add redux-saga-fetch-async
+
 ```
 
 ### redux-saga-async配置
@@ -29,8 +24,6 @@ export const address = {
 2. add config in config.js
 + id 可以看做是redux中的action
 + addr 访问的api地址
-+ schmea 对获取的数据进行序列化
-+ schemaID 和id一致即可
 + hasCert 是否需要验证，默认true
 
 ```
@@ -43,7 +36,7 @@ export const address = {
 
 ```
 import React, { Component } from 'react';
-import { handsome, combineData, bindActionCreators, connect } from './redux-saga-async';
+import { handsome, combineData, bindActionCreators, connect } from 'redux-saga-fetch-async';
 
 class User extends Component {
   componentWillMount() {
@@ -107,7 +100,7 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import User from './User';
-import { store, Provider } from './redux-saga-async';
+import { store, Provider } from 'redux-saga-fetch-async';
 
 ReactDOM.render(
   <Provider store={store}>
