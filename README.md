@@ -25,21 +25,8 @@ export const address = {
   users: `${serviceDomain}/users`,
 }
 ```
-2. add schema in /templates/store.js
 
-使用normalizr,github地址 [https://github.com/paularmstrong/normalizr](https://github.com/paularmstrong/normalizr)
-
-```
-import { schema } from 'normalizr';
-
-export const userSchema = new schema.Entity('users');
-
-export const stateSchema = {
-  users: [userSchema],
-}
-```
-
-3. add config in config.js
+2. add config in config.js
 + id 可以看做是redux中的action
 + addr 访问的api地址
 + schmea 对获取的数据进行序列化
@@ -47,7 +34,7 @@ export const stateSchema = {
 + hasCert 是否需要验证，默认true
 
 ```
-{ id: 'users', addr: address.users, schema: { results: [state.flowerSchema] }, schemaID: 'users', hasCert: false },
+{ id: 'users', addr: address.users, hasCert: false },
 ```
 
 ### React组件的使用
@@ -124,35 +111,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-import { createStore, compose, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import createSagaMiddleware from 'redux-saga';
-
-import { appSaga, appState, appReducer } from './templates';
-
 import User from './User';
-
-let sagaMiddleware = createSagaMiddleware()
-let enhancer = {}
-
-if (process.env.NODE_ENV === 'production') {
-  enhancer = compose(
-    applyMiddleware(sagaMiddleware),
-  )
-} else {
-  enhancer = compose(
-    applyMiddleware(sagaMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
-}
-
-export const store = createStore(
-  appReducer,
-  appState,
-  enhancer,
-)
-
-sagaMiddleware.run(appSaga)
+import { store, Provider } from './redux-saga-async';
 
 ReactDOM.render(
   <Provider store={store}>
