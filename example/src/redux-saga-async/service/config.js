@@ -1,5 +1,8 @@
 import { address } from './address';
 
-export const configList = [
-  { id: 'users', addr: address.users, hasCert: false },
-]
+const lists = Object.keys(address);
+
+export const configList = lists.map((item, index) => {
+  return { id: item, addr: Object.values(address)[index], hasCert: false }
+})
+

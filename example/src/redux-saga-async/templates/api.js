@@ -3,12 +3,16 @@ import { request } from '../service/';
 
 export const get = (config, schema) => request(config)
   .then(resp => {
-
-    let rsp = {
-      count: null,
-      previous: null,
-      next: null,
-      results: resp
+    let rsp = {}
+    if (!resp.results) {
+      rsp = {
+        count: null,
+        previous: null,
+        next: null,
+        results: resp
+      }
+    } else {
+      rsp = resp
     }
 
     let schemaData = normalize(rsp, schema)
