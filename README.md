@@ -1,4 +1,4 @@
-# redux-saga-async
+# redux-saga-fetch-async
 Use redux, redux-saga, normalizr, lodash and fetch api to apply service data with restful api.
 
 ## Usage
@@ -10,7 +10,7 @@ or yarn add redux-saga-fetch-async
 
 ```
 
-### redux-saga-async配置
+### redux-saga-fetch-async配置
 1. add api address in /service/addresss.js
 
 ```
