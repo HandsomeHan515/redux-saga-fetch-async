@@ -1,7 +1,31 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { createStore, compose, applyMiddleware, bindActionCreators } from 'redux';
+import { Provider, connect } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
 
-import { store, Provider, handsome, combineData } from './templates';
-import { address } from './service';
+import { handsome, appReducer, appState, appSaga, reduxSOP } from './templates';
 
-export { store, Provider, address, handsome, combineData, bindActionCreators, connect }
+let sagaMiddleware = createSagaMiddleware()
+let enhancer = {}
+
+if (process.env.NODE_ENV === 'production') {
+  enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+  )
+} else {
+  enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+}
+
+const store = createStore(
+  appReducer,
+  appState,
+  enhancer,
+)
+
+sagaMiddleware.run(appSaga)
+
+const combineData = (result, entities) => (result.map(item => entities[item]));
+
+export { store, Provider, handsome, combineData, bindActionCreators, connect, reduxSOP }

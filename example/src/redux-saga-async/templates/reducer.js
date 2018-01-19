@@ -112,6 +112,6 @@ export const getReducers = type => {
     }
   }
 
-  console.log('comniner %o reducers: %o', type, combineReducers)
+  // console.log('comniner %o reducers: %o', type, combineReducers)
   return combineReducers
 }
