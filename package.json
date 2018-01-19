@@ -1,0 +1,27 @@
+{
+  "name": "redux-saga-async",
+  "version": "1.0.0",
+  "description": "Use redux, redux-saga, normalizr, lodash and fetch api to apply service data with restful api.",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HandsomeHan515/redux-saga-async.git"
+  },
+  "keywords": [
+    "redux",
+    "redux-saga",
+    "async"
+  ],
+  "author": "handsomehan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HandsomeHan515/redux-saga-async/issues"
+  },
+  "homepage": "https://github.com/HandsomeHan515/redux-saga-async#readme"
+}
