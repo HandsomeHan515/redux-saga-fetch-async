@@ -11,26 +11,49 @@ or yarn add redux-saga-fetch-async
 ```
 
 ### redux-saga-fetch-async配置
-1. add api address in /service/addresss.js
+有如下几个函数：
+```
+Provider, bindActionCreators, connect, handsome, ReduxInit， combineData
+```
++ Provider, bindActionCreators, connect是redux中原生的组件
++ ReduxInit是初始化时需调用的函数，函数接收参数configList，返回Provider中的store
++ combineData将序列化之后的函数合成数组
++ handsome生成action创建函数
+
+#### index.js配置
++ 安装Google浏览器插件[https://github.com/zalmoxisus/redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
 
 ```
-const serviceDomain = 'https://api.github.com';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import registerServiceWorker from './registerServiceWorker';
 
-export const address = {
-  users: `${serviceDomain}/users`,
+import User from './User';
+import { Provider, reduxInit } from './redux-saga-async';
+
+const address = {
+  users: 'https://api.github.com/users',
 }
+
+const lists = Object.keys(address)
+
+const configList = lists.map((item, index) => {
+  return { id: item, addr: Object.values(address)[index], hasCert: false }
+})
+
+const { store } = reduxInit(configList)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <User />
+  </Provider>
+  , document.getElementById('root'));
+registerServiceWorker();
+
 ```
 
-2. add config in config.js
-+ id 可以看做是redux中的action
-+ addr 访问的api地址
-+ hasCert 是否需要验证，默认true
-
-```
-{ id: 'users', addr: address.users, hasCert: false },
-```
-
-### React组件的使用
+#### React组件的使用
 
 1. GET方法
 
@@ -88,25 +111,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(User)
-```
-
-### index.js配置
-+ 安装Google浏览器插件[https://github.com/zalmoxisus/redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
-
-```
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import registerServiceWorker from './registerServiceWorker';
-
-import User from './User';
-import { store, Provider } from 'redux-saga-fetch-async';
-
-ReactDOM.render(
-  <Provider store={store}>
-    <User />
-  </Provider>
-  , document.getElementById('root'));
-registerServiceWorker();
-
 ```

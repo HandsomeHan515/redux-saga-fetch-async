@@ -6,7 +6,7 @@ import { schema } from 'normalizr';
 import { handsome, getReducers, appState, appSaga, register } from './templates';
 
 
-export const reduxInit = configList => {
+const reduxInit = configList => {
   // console.log('configList: %o', configList)
   configList.map(item => {
     const tmpSchema = new schema.Entity(item.id);
@@ -63,4 +63,4 @@ export const reduxInit = configList => {
 
 const combineData = (result, entities) => (result.map(item => entities[item]));
 
-export { Provider, combineData, bindActionCreators, connect, handsome }
+export { Provider, combineData, bindActionCreators, connect, handsome, reduxInit }
