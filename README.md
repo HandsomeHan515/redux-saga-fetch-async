@@ -43,10 +43,7 @@ export const address = {
 
 ```
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { handsome, combineData } from './templates';
+import { handsome, combineData, bindActionCreators, connect } from './redux-saga-async';
 
 class User extends Component {
   componentWillMount() {
@@ -56,8 +53,6 @@ class User extends Component {
   render() {
     const { usersResults, usersEntities, usersStatus } = this.props
     const users = combineData(usersResults, usersEntities);
-
-    console.log('users: %o', users)
 
     return (
       <div style={{ textAlign: 'center' }}>
