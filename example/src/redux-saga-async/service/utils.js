@@ -1,11 +1,9 @@
-import { appCore } from './index';
-
 export const request = config => {
   config = Object.assign({}, {
     url: '',
     body: undefined,
     method: 'GET',
-    hasCert: false,
+    cert: undefined,
     isJson: true,
     isBlob: false,
     hasHeader: true
@@ -24,8 +22,8 @@ export const request = config => {
     }
   }
 
-  if (config.hasCert) {
-    elements.headers.Authorization = appCore.token
+  if (config.cert) {
+    elements.headers.Authorization = config.cert
   }
 
   return (
