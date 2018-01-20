@@ -1,6 +1,8 @@
 # redux-saga-fetch-async
 Use redux, redux-saga, normalizr, lodash and fetch api to apply service data with restful api.
 
+ ![image](http://api.handsomehan.cn:10001/media/84f19f7f-afd.jpg)
+
 ## Usage
 
 ```
