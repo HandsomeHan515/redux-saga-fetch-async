@@ -179,6 +179,9 @@ export default connect(
 ```
 
 2. 类型二
++ count代表数据长度
++ next代表下一个分页的路径
++ previous代表上一个分页的路径
 
 ```
 {
