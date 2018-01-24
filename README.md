@@ -159,3 +159,36 @@ export default connect(
   mapDispatchToProps
 )(Ad)
 ```
+
+### 服务端数据格式
+
+1. 类型一
+
+```
+[
+  {id: 1, name:'12345'},
+  {id: 2, name:'12345'},
+  {id: 3, name:'12345'},
+  {id: 4, name:'12345'},
+  {id: 5, name:'12345'},
+  {id: 6, name:'12345'},
+  {id: 7, name:'12345'},
+  {id: 8, name:'12345'},
+  {id: 9, name:'12345'},
+]
+```
+
+2. 类型二
+
+```
+{
+   count： 3，
+   next:null,
+   previous: null,
+   results: [
+     {id: 1, name:'12345'},
+     {id: 2, name:'12345'},
+     {id: 3, name:'12345'},
+   ]
+}
+```
