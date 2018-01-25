@@ -23,7 +23,7 @@ let headers = {
 
 const configList = [
   { id: 'users', addr: address.users },
-  { id: 'ads', addr: `${address.ads}?limit=2`, headers: headers }
+  { id: 'ads', addr: address.ads, headers: headers }
 ]
 
 const { store } = reduxInit(configList)
