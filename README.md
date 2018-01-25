@@ -1,6 +1,8 @@
 # redux-saga-fetch-async
 Use redux, redux-saga, normalizr, lodash and fetch api to apply service data with restful api.
 
+ ![image](http://api.handsomehan.cn:10001/media/84f19f7f-afd.jpg)
+
 ## Usage
 
 ```
@@ -156,4 +158,40 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Ad)
+```
+
+### 服务端数据格式
+
+1. 类型一
+
+```
+[
+  {id: 1, name:'12345'},
+  {id: 2, name:'12345'},
+  {id: 3, name:'12345'},
+  {id: 4, name:'12345'},
+  {id: 5, name:'12345'},
+  {id: 6, name:'12345'},
+  {id: 7, name:'12345'},
+  {id: 8, name:'12345'},
+  {id: 9, name:'12345'},
+]
+```
+
+2. 类型二
++ count代表数据长度
++ next代表下一个分页的路径
++ previous代表上一个分页的路径
+
+```
+{
+   count： 3，
+   next:null,
+   previous: null,
+   results: [
+     {id: 1, name:'12345'},
+     {id: 2, name:'12345'},
+     {id: 3, name:'12345'},
+   ]
+}
 ```
