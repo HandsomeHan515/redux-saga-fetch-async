@@ -1,6 +1,6 @@
 {
   "name": "redux-saga-fetch-async",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Use redux, redux-saga, normalizr, lodash and fetch api to apply service data with restful api.",
   "main": "index.js",
   "directories": {

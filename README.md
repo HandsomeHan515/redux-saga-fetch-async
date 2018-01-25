@@ -13,7 +13,8 @@ or yarn add redux-saga-fetch-async
 ```
 
 ### redux-saga-fetch-async配置
-有如下几个函数：
+
+1. 有如下几个函数：
 ```
 Provider, bindActionCreators, connect, handsome, ReduxInit， combineData
 ```
@@ -21,6 +22,17 @@ Provider, bindActionCreators, connect, handsome, ReduxInit， combineData
 + ReduxInit是初始化时需调用的函数，函数接收参数configList，返回Provider中的store
 + combineData将序列化之后的函数合成数组
 + handsome中存放action, action创建函数，saga
+
+2. 采用fetch api请求数据
+
++ config 中的headers视情况添加（默认配置如下）
+
+```
+let headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+}
+```
 
 #### index.js配置
 + 安装Google浏览器插件[https://github.com/zalmoxisus/redux-devtools-extension](https://github.com/zalmoxisus/redux-devtools-extension)
@@ -33,7 +45,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { Provider, reduxInit } from './redux-saga-async';
 
-import User from './User';
+// import User from './User';
 import Ad from './Ad';
 
 const address = {
@@ -43,9 +55,15 @@ const address = {
 
 const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZXhwIjoxNTE2NDEzMzIzLCJ1c2VyX2lkIjoxLCJlbWFpbCI6bnVsbH0.2lB5WfjSGLn4g2kFLZq54BADsQ2y10ilt-0JtF6Ch40'
 
+let headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': token
+}
+
 const configList = [
-  { id: 'users', addr: address.users, cert: undefined },
-  { id: 'ads', addr: address.ads, cert: token }
+  { id: 'users', addr: address.users },
+  { id: 'ads', addr: `${address.ads}?limit=2`, headers: headers }
 ]
 
 const { store } = reduxInit(configList)
@@ -57,10 +75,11 @@ ReactDOM.render(
   , document.getElementById('root'));
 registerServiceWorker();
 
+
 ```
 
 #### React组件的使用
-+ rest api 中的GET、DELETE、POST、PATCH中的四种操作
++ rest api 中的GET、DELETE、POST、PATCH中的四种操作及GET请求的分页处理
 + 详情查看example中的例子
 
 ```
@@ -130,6 +149,8 @@ class Ad extends Component {
                     <button style={{ textAlign: 'center' }} onClick={this.create}>添加</button>
                   </div>
               }
+
+              <button onClick={() => { this.props.nextAd({ url: adsEntities['next'] }) }}>下一页</button>
             </div>
         }
       </div>
@@ -151,6 +172,7 @@ const mapDispatchToProps = dispatch => {
     updateAd: handsome.ads.methods.update,
     deleteAd: handsome.ads.methods.del,
     createAd: handsome.ads.methods.create,
+    nextAd: handsome.ads.methods.nextPage
   }, dispatch)
 }
 

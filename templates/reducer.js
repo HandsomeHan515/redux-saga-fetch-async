@@ -92,7 +92,7 @@ export const getReducers = type => {
           acs[actions.ADD_RESULTS],
           acs[actions.CREATE_RESULTS],
           acs[actions.DEL_RESULTS],
-          // acs[actions.NEXT_PAGE_RESULTS]
+          acs[actions.NEXT_PAGE_RESULTS]
         ])
       } else if (type === 'entities') {
         combineReducers[key] = changeEntities([
@@ -100,7 +100,7 @@ export const getReducers = type => {
           acs[actions.CREATE_ENTITIES],
           acs[actions.UPDATE_ENTITIES],
           acs[actions.DEL_ENTITIES],
-          // acs[actions.NEXT_PAGE_ENTITIES]
+          acs[actions.NEXT_PAGE_ENTITIES]
         ])
       } else {
         combineReducers[key] = changeStatus([

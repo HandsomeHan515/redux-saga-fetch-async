@@ -3,27 +3,20 @@ export const request = config => {
     url: '',
     body: undefined,
     method: 'GET',
-    cert: undefined,
+    headers: undefined,
     isJson: true,
     isBlob: false,
-    hasHeader: true
   }, config)
+
+  let headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  }
 
   let elements = {
     method: config.method,
     body: config.body,
-    headers: undefined
-  }
-
-  if (config.hasHeader) {
-    elements.headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    }
-  }
-
-  if (config.cert) {
-    elements.headers.Authorization = config.cert
+    headers: config.headers ? config.headers : headers
   }
 
   return (

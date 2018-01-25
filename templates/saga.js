@@ -3,7 +3,7 @@ import { handsome } from './index';
 import * as apis from './api';
 
 function* wacthGetMethods(config) {
-  const { hasNetStatus, type, addr, schema, schemaID, cert } = config
+  const { hasNetStatus, type, addr, schema, schemaID, headers } = config
 
   while (true) {
     const { payload } = yield take(handsome[type].actions.__LIST);
@@ -15,7 +15,7 @@ function* wacthGetMethods(config) {
     try {
       let apiConfig = {
         url: payload.url ? payload.url : addr,
-        cert,
+        headers,
       }
 
       let data = yield call(apis.get, apiConfig, schema);
@@ -36,7 +36,7 @@ function* wacthGetMethods(config) {
 }
 
 function* watchCreateMethods(config) {
-  const { isEntity, hasNetStatus, type, addr, createActions, cert } = config
+  const { isEntity, hasNetStatus, type, addr, createActions, headers } = config
 
   while (true) {
     const { payload } = yield take(handsome[type].actions.__CREATE);
@@ -49,7 +49,7 @@ function* watchCreateMethods(config) {
       let apiConfig = {
         url: addr,
         body: JSON.stringify(payload),
-        cert,
+        headers,
       }
 
       let created = yield call(apis.create, apiConfig);
@@ -76,7 +76,7 @@ function* watchCreateMethods(config) {
 }
 
 function* watchUpdateMethods(config) {
-  const { isEntity, hasNetStatus, type, addr, updateActions, cert } = config
+  const { isEntity, hasNetStatus, type, addr, updateActions, headers } = config
 
   while (true) {
     const { payload } = yield take(handsome[type].actions.__UPDATE);
@@ -89,7 +89,7 @@ function* watchUpdateMethods(config) {
       let apiConfig = {
         url: `${addr}${payload.id}/`,
         body: JSON.stringify(payload),
-        cert,
+        headers,
       }
 
       let updated = yield call(apis.update, apiConfig);
@@ -117,7 +117,7 @@ function* watchUpdateMethods(config) {
 }
 
 function* watchDelMethods(config) {
-  const { isEntity, hasNetStatus, type, addr, delActions, cert } = config
+  const { isEntity, hasNetStatus, type, addr, delActions, headers } = config
 
   while (true) {
     const { payload } = yield take(handsome[type].actions.__DEL);
@@ -128,7 +128,7 @@ function* watchDelMethods(config) {
     try {
       let apiConfig = {
         url: `${addr}${payload.id}/`,
-        cert,
+        headers,
       }
 
       yield call(apis.del, apiConfig);
@@ -154,12 +154,50 @@ function* watchDelMethods(config) {
   }
 }
 
+function* watchNextPageMethods(config) {
+  const { hasNetStatus, type, schema, schemaID, headers } = config
+
+  while (true) {
+    const { payload } = yield take(handsome[type].actions.__NEXT_PAGE);
+
+    if (!payload.url) {
+      return false
+    }
+
+    try {
+      if (hasNetStatus) {
+        yield put({ type: handsome[type].actions.__REQUEST })
+      }
+
+      let apiConfig = {
+        url: payload.url,
+        headers,
+      }
+
+      let data = yield call(apis.get, apiConfig, schema);
+      const { count, previous, next } = data.result
+
+      Object.assign(data.entities[schemaID], { count, previous, next });
+
+      yield put({ type: handsome[type].actions.__NEXT_PAGE_ENTITIES, payload: data.entities[schemaID] });
+      yield put({ type: handsome[type].actions.__NEXT_PAGE_RESULTS, payload: data.result.results });
+
+      if (hasNetStatus) {
+        yield put({ type: handsome[type].actions.__SUCCESS });
+      }
+    } catch (error) {
+      yield put({ type: handsome[type].actions.__FAILURE });
+    }
+  }
+}
+
 export const watchingSagas = config => {
   return [
     fork(wacthGetMethods, config),
     fork(watchCreateMethods, config),
     fork(watchUpdateMethods, config),
     fork(watchDelMethods, config),
+    fork(watchNextPageMethods, config)
   ]
 }
 

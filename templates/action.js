@@ -31,6 +31,14 @@ export const DEL = '__DEL';
 export const DEL_ENTITIES = '__DEL_ENTITIES';
 export const DEL_RESULTS = '__DEL_RESULTS';
 
+/**
+ * next page
+ */
+export const NEXT_PAGE = '__NEXT_PAGE'
+export const NEXT_PAGE_ENTITIES = '__NEXT_PAGE_ENTITIES'
+export const NEXT_PAGE_RESULTS = '__NEXT_PAGE_RESULTS'
+
+
 
 export const actions = name => {
   return [
@@ -38,7 +46,8 @@ export const actions = name => {
     CREATE, CREATE_ENTITIES, CREATE_RESULTS,
     UPDATE, UPDATE_ENTITIES, UPDATE_RESULTS,
     DEL, DEL_ENTITIES, DEL_RESULTS,
-    REQUEST, SUCCESS, FAILURE
+    REQUEST, SUCCESS, FAILURE,
+    NEXT_PAGE, NEXT_PAGE_ENTITIES, NEXT_PAGE_RESULTS
   ].reduce((action, type) => {
     action[type] = `${type}_${name}`
     return action
@@ -52,10 +61,11 @@ export const actionMethods = actions => {
     'get': LIST,
     'create': CREATE,
     'update': UPDATE,
-    'del': DEL
+    'del': DEL,
+    'nextPage': NEXT_PAGE
   }
 
-  return ['get', 'create', 'update', 'del'].reduce((acc, type) => {
+  return ['get', 'create', 'update', 'del', 'nextPage'].reduce((acc, type) => {
     acc[type] = payload => action(actions[relation[type]], payload)
     return acc
   }, {});
