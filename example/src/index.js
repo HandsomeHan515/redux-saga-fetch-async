@@ -5,7 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { Provider, reduxInit } from './redux-saga-async';
 
-import User from './User';
+// import User from './User';
 import Ad from './Ad';
 
 const address = {
@@ -30,7 +30,7 @@ const { store } = reduxInit(configList)
 
 ReactDOM.render(
   <Provider store={store}>
-    <User />
+    <Ad />
   </Provider>
   , document.getElementById('root'));
 registerServiceWorker();
