@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { handsome, combineData, bindActionCreators, connect } from './redux-saga-async';
 
 import { image } from './redux-saga-async/service';
+import { address } from '../src';
 
 class Ad extends Component {
   componentWillMount() {
-    this.props.getAd()
+    let payload = {
+      url: `${address.ads}?limit=2`
+    }
+    this.props.getAd(payload)
   }
 
   update = item => {
