@@ -154,12 +154,50 @@ function* watchDelMethods(config) {
   }
 }
 
+function* watchNextPageMethods(config) {
+  const { hasNetStatus, type, schema, schemaID, cert } = config
+
+  while (true) {
+    const { payload } = yield take(handsome[type].actions.__NEXT_PAGE);
+
+    if (!payload.url) {
+      return false
+    }
+
+    try {
+      if (hasNetStatus) {
+        yield put({ type: handsome[type].actions.__REQUEST })
+      }
+
+      let apiConfig = {
+        url: payload.url,
+        cert,
+      }
+
+      let data = yield call(apis.get, apiConfig, schema);
+      const { count, previous, next } = data.result
+
+      Object.assign(data.entities[schemaID], { count, previous, next });
+
+      yield put({ type: handsome[type].actions.__NEXT_PAGE_ENTITIES, payload: data.entities[schemaID] });
+      yield put({ type: handsome[type].actions.__NEXT_PAGE_RESULTS, payload: data.result.results });
+
+      if (hasNetStatus) {
+        yield put({ type: handsome[type].actions.__SUCCESS });
+      }
+    } catch (error) {
+      yield put({ type: handsome[type].actions.__FAILURE });
+    }
+  }
+}
+
 export const watchingSagas = config => {
   return [
     fork(wacthGetMethods, config),
     fork(watchCreateMethods, config),
     fork(watchUpdateMethods, config),
     fork(watchDelMethods, config),
+    fork(watchNextPageMethods, config)
   ]
 }
 

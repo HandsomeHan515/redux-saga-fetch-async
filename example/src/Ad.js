@@ -64,6 +64,8 @@ class Ad extends Component {
                     <button style={{ textAlign: 'center' }} onClick={this.create}>添加</button>
                   </div>
               }
+
+              <button onClick={() => { this.props.nextAd({ url: adsEntities['next'] }) }}>下一页</button>
             </div>
         }
       </div>
@@ -85,6 +87,7 @@ const mapDispatchToProps = dispatch => {
     updateAd: handsome.ads.methods.update,
     deleteAd: handsome.ads.methods.del,
     createAd: handsome.ads.methods.create,
+    nextAd: handsome.ads.methods.nextPage
   }, dispatch)
 }
 

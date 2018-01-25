@@ -5,7 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { Provider, reduxInit } from './redux-saga-async';
 
-import User from './User';
+// import User from './User';
 import Ad from './Ad';
 
 const address = {
@@ -17,7 +17,7 @@ const token = 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWlu
 
 const configList = [
   { id: 'users', addr: address.users, cert: undefined },
-  { id: 'ads', addr: address.ads, cert: token }
+  { id: 'ads', addr: `${address.ads}?limit=2`, cert: token }
 ]
 
 const { store } = reduxInit(configList)

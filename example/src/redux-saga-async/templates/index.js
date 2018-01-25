@@ -31,6 +31,7 @@ const register = config => {
     hasNetStatus: true,
     isEntity: true,
     cert: true,
+    hasPage: true
   }, config);
 
   if (!cfg.id) {
