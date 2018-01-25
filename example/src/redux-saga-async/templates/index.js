@@ -14,7 +14,7 @@ const handsome = {}
     listActions: function, default = undefined,
     createActions: function, default = undefined,
     updateActions: function, default = undefined,
-    cert: string, default = undefined,
+    headers: object, default = undefined,
   }
  */
 
@@ -30,7 +30,7 @@ const register = config => {
     delActions: undefined,
     hasNetStatus: true,
     isEntity: true,
-    cert: true,
+    headers: undefined,
     hasPage: true
   }, config);
 
