@@ -46,8 +46,11 @@ function* watchCreateMethods(config) {
     }
 
     try {
+      let url = payload.url
+      delete payload['url']
+
       let apiConfig = {
-        url: addr,
+        url: url ? url : addr,
         body: JSON.stringify(payload),
         headers,
       }
