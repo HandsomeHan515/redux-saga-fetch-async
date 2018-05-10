@@ -33,7 +33,7 @@ export const create = config => base(
 
 export const update = config => base(
   Object.assign({}, {
-    method: 'PUT',
+    method: 'PATCH',
   }, config)
 );
 
